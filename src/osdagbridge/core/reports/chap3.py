@@ -53,7 +53,7 @@ from osdagbridge.core.utils.common import (
     KEY_WL_VERTICAL_WIND_FORCE
 )
 
-from osdagbridge.core.reports.report_utils import _tex, _render_value
+from osdagbridge.core.reports.report_utils import _tex, _render_value, make_longtable
 
 def ch3_loads(input_dict):
     # Live load vehicle names mapping
@@ -265,6 +265,21 @@ def ch3_loads(input_dict):
         )
 
     lc_rows_str = "\n".join(lc_rows)
+
+    dead_self_table = make_longtable(
+        r"|L{5.5cm}|p{10.0cm}|",
+        ["parameter", "value"],
+        [
+            r"\textnormal{Steel Self-Weight Applied} & "
+            + _render_value(input_dict, KEY_MATERIAL_GIRDER_DENSITY, ' kN/m\\textsuperscript{3}'),
+            r"\textnormal{Concrete Deck Weight} & "
+            + _render_value(input_dict, KEY_MATERIAL_DECK_DENSITY, ' kN/m\\textsuperscript{3}'),
+            r"\textnormal{Self-Weight Factor} & "
+            + _render_value(input_dict, KEY_PL_SELF_WEIGHT_FACTOR),
+        ],
+        caption=r"\textbf{Dead Load -- Self Weight}",
+    )
+
 
     return r"""
 \chapter{Loads and Load Combinations}
