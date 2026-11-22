@@ -112,4 +112,25 @@ def _fig_embed(path, caption, width=r'\textwidth', height=None):
             r'\textit{[ PLACEHOLDER: ' + caption + r' ]}' + '\n'
             r'}}')
 
+def make_longtable(col_spec, headers, rows, caption=None):
+    """Build a longtable whose header repeats on every page."""
+    from osdagbridge.core.reports.styles import TABLE
+    ncols = len(headers)
+    head = " & ".join(r"\textbf{%s}" % h for h in headers) + r" \\"
+    cap = (r"\caption{%s}\\" % caption + "\n") if caption else ""
+    cont = (r"\multicolumn{%d}{r}{\footnotesize\textit{continued on next page}} \\"
+            % ncols)
+    pad = TABLE["row_pad"]
+    body = "\n".join(r + r" \\[%s]" % pad + "\n\\hline" for r in rows)
+    return (
+        "\\begin{longtable}{%s}\n" % col_spec
+        + cap
+        + "\\hline\n" + head + "\n\\hline\n\\endfirsthead\n"
+        + "\\hline\n" + head + "\n\\hline\n\\endhead\n"
+        + "\\hline\n" + cont + "\n\\endfoot\n"
+        + "\\hline\n\\endlastfoot\n"
+        + body + "\n"
+        + "\\end{longtable}\n"
+    )
+
 
