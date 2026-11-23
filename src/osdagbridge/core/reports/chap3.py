@@ -293,6 +293,31 @@ def ch3_loads(input_dict):
         ],
         caption=r"\textbf{Dead Load for Surfacing (DW)}",
     )
+    
+    
+    wind_table = make_longtable(
+        r"|L{5.5cm}|p{10.0cm}|",
+        ["parameter", "value"],
+        [
+            r"\textnormal{Basic Wind Speed, Vb} & "
+            + _render_value(input_dict, 'wind_speed', ' m/s') + r" [from Project Location]",
+            r"\textnormal{Terrain Type} & "
+            + _render_value(input_dict, KEY_WL_TERRAIN_TYPE),
+            r"\textnormal{Average Exposed Height, H (m)} & "
+            + _render_value(input_dict, KEY_WL_AVG_EXPOSED_HEIGHT, ' m'),
+            r"\textnormal{Hourly Mean Wind Speed, Vz} & "
+            + _render_value(input_dict, KEY_WL_HOURLY_MEAN_WIND, ' m/s'),
+            r"\textnormal{Hourly Wind Pressure, Pz} & "
+            + _render_value(input_dict, KEY_WL_HOURLY_WIND_PRESSURE, ' N/m\\textsuperscript{2}'),
+            r"\textnormal{Transverse Wind Force} & "
+            + _render_value(input_dict, KEY_WL_TRANSVERSE_WIND_FORCE, ' kN'),
+            r"\textnormal{Longitudinal Wind Force} & "
+            + _render_value(input_dict, KEY_WL_LONGITUDINAL_WIND_FORCE, ' kN'),
+            r"\textnormal{Vertical Wind Force} & "
+            + _render_value(input_dict, KEY_WL_VERTICAL_WIND_FORCE, ' kN'),
+        ],
+        caption=r"\textbf{Wind Load (WL) --- per IRC 6}",
+    )
 
 
     return r"""
@@ -323,28 +348,7 @@ This section summarizes all loads applied to the bridge and the load combination
 \end{longtable}
 
 \vspace{1em}
-\begin{longtable}{|L{5.5cm}|p{10.0cm}|}
-\caption{\textbf{Wind Load (WL) --- per IRC 6}}
-\hline
-\textbf{parameter} & \textbf{value} \\
-\hline
-\textnormal{Basic Wind Speed, Vb} & """ + (_render_value(input_dict,'wind_speed', ' m/s')) + r""" [from Project Location] \\[6pt]
-\hline
-\textnormal{Terrain Type} & """ + (_render_value(input_dict, KEY_WL_TERRAIN_TYPE)) + r""" \\[6pt]
-\hline
-\textnormal{Average Exposed Height, H (m)} & """ + (_render_value(input_dict, KEY_WL_AVG_EXPOSED_HEIGHT, ' m')) + r""" \\[6pt]
-\hline
-\textnormal{Hourly Mean Wind Speed, Vz} & """ + (_render_value(input_dict, KEY_WL_HOURLY_MEAN_WIND, ' m/s')) + r""" \\[6pt]
-\hline
-\textnormal{Hourly Wind Pressure, Pz} & """ + (_render_value(input_dict, KEY_WL_HOURLY_WIND_PRESSURE, ' N/m\\textsuperscript{2}')) + r""" \\[6pt]
-\hline
-\textnormal{Transverse Wind Force} & """ + (_render_value(input_dict, KEY_WL_TRANSVERSE_WIND_FORCE, ' kN')) + r""" \\[6pt]
-\hline
-\textnormal{Longitudinal Wind Force} & """ + (_render_value(input_dict, KEY_WL_LONGITUDINAL_WIND_FORCE, ' kN')) + r""" \\[6pt]
-\hline
-\textnormal{Vertical Wind Force} & """ + (_render_value(input_dict, KEY_WL_VERTICAL_WIND_FORCE, ' kN')) + r""" \\[6pt]
-\hline
-\end{longtable}
+""" + wind_table + r"""
 
 \vspace{1em}
 \begin{longtable}{|L{5.5cm}|p{10.0cm}|}
