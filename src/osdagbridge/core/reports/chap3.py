@@ -279,6 +279,20 @@ def ch3_loads(input_dict):
         ],
         caption=r"\textbf{Dead Load -- Self Weight}",
     )
+    
+    surfacing_table = make_longtable(
+        r"|L{5.5cm}|p{10.0cm}|",
+        ["parameter", "value"],
+        [
+            r"\textnormal{Wearing Course Load} & "
+            + _render_value(input_dict, KEY_WC_MATERIAL) + r" x " + _render_value(input_dict, KEY_WC_THICKNESS),
+            r"\textnormal{Additional SIDL (Crash Barrier)} & "
+            + _render_value(input_dict, KEY_CB_LOAD) + r" kN/m per barrier",
+            r"\textnormal{Railing Load} & "
+            + _render_value(input_dict, KEY_RL_LOAD_VALUE) + r" kN/m\sdstar{}",
+        ],
+        caption=r"\textbf{Dead Load for Surfacing (DW)}",
+    )
 
 
     return r"""
@@ -290,18 +304,7 @@ This section summarizes all loads applied to the bridge and the load combination
 """ + dead_self_table + r"""
 
 \vspace{1em}
-\begin{longtable}{|L{5.5cm}|p{10.0cm}|}
-\caption{\textbf{Dead Load for Surfacing (DW)}}
-\hline
-\textbf{parameter} & \textbf{value} \\
-\hline
-\textnormal{Wearing Course Load} & """ + (_render_value(input_dict, KEY_WC_MATERIAL)) + r""" x """ + (_render_value(input_dict, KEY_WC_THICKNESS)) + r""" \\[6pt]
-\hline
-\textnormal{Additional SIDL (Crash Barrier)} & """ + (_render_value(input_dict, KEY_CB_LOAD)) + r""" kN/m per barrier \\[6pt]
-\hline
-\textnormal{Railing Load} & """ + (_render_value(input_dict, KEY_RL_LOAD_VALUE)) + r""" kN/m\sdstar{} \\[6pt]
-\hline
-\end{longtable}
+""" + surfacing_table + r"""
 
 \vspace{1em}
 \begin{longtable}{|L{5.5cm}|p{10.0cm}|}
