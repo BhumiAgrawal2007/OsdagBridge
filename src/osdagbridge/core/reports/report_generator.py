@@ -106,6 +106,7 @@
 import os, shutil, logging, datetime, tempfile, subprocess
 from dataclasses import dataclass, field
 from typing import Optional, List, Literal
+from osdagbridge.core.reports.styles import PAGE
 
 from osdagbridge.core.utils.common import (
     KEY_DESIGN_MODE,
@@ -156,7 +157,7 @@ def preamble(project_name, job_number, report_date, report_version='Rev 0'):
 \documentclass[12pt,a4paper]{report}
 
 % Packages
-\usepackage[a4paper, margin=1in]{geometry}
+\usepackage[""" + PAGE["paper"] + ", margin=" + PAGE["margin"] + r"""]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
