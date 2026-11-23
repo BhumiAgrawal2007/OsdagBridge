@@ -317,6 +317,50 @@ def ch3_loads(input_dict):
             + _render_value(input_dict, KEY_WL_VERTICAL_WIND_FORCE, ' kN'),
         ],
         caption=r"\textbf{Wind Load (WL) --- per IRC 6}",
+    ) 
+    
+    earthquake_table = make_longtable(
+        r"|L{5.5cm}|p{10.0cm}|",
+        ["parameter", "value"],
+        [
+            r"\textnormal{Seismic Zone} & "
+            + _render_value(input_dict, 'seismic_zone') + r" [from Project Location]",
+            r"\textnormal{Zone Factor, Z} & "
+            + _render_value(input_dict, KEY_SL_ZONE_FACTOR),
+            r"\textnormal{Importance Factor, I} & "
+            + _render_value(input_dict, KEY_SL_IMPORTANCE_FACTOR),
+            r"\textnormal{Type of Soil} & "
+            + _render_value(input_dict, KEY_SL_SOIL_TYPE),
+            r"\textnormal{Sa/g} & "
+            + _render_value(input_dict, KEY_SL_SPECTRAL_COEFF),
+            r"\textnormal{Horizontal Seismic Coefficient, Ah} & "
+            + _render_value(input_dict, KEY_SL_HORIZONTAL_COEFF),
+            r"\textnormal{Vertical Seismic Coefficient, Av} & "
+            + _render_value(input_dict, KEY_SL_VERTICAL_COEFF),
+            r"\textnormal{Horizontal Seismic Force (longitudinal)} & "
+            + r" kN",
+            r"\textnormal{Horizontal Seismic Force (transverse)} & "
+            + r" kN",
+        ],
+        caption=r"\textbf{Earthquake Load (EL) --- per IRC 6}",
+    )    
+    
+    temperature_table = make_longtable(
+        r"|L{5.5cm}|p{10.0cm}|",
+        ["parameter", "value"],
+        [
+            r"\textnormal{Maximum Shade Temperature} & "
+            + _render_value(input_dict, 'shade_temp_max') + r" $^\circ$C",
+            r"\textnormal{Minimum Shade Temperature} & "
+            + _render_value(input_dict, 'shade_temp_min') + r" $^\circ$C",
+            r"\textnormal{Effective Bridge Temp. Range} & "
+            + _render_value(input_dict, KEY_TL_BRIDGE_TEMP_MIN) + r" to "
+            + _render_value(input_dict, KEY_TL_BRIDGE_TEMP_MAX) + r" $^\circ$C",
+            r"\textnormal{Temperature Rise / Fall for Design} & +"
+            + _render_value(input_dict, KEY_TL_TEMP_RISE) + r" $^\circ$C / \textminus{}"
+            + _render_value(input_dict, KEY_TL_TEMP_FALL) + r" $^\circ$C",
+        ],
+        caption=r"\textbf{Temperature Load (TL) --- per IRC 6}",
     )
 
 
@@ -351,47 +395,10 @@ This section summarizes all loads applied to the bridge and the load combination
 """ + wind_table + r"""
 
 \vspace{1em}
-\begin{longtable}{|L{5.5cm}|p{10.0cm}|}
-\caption{\textbf{Earthquake Load (EL) --- per IRC 6}}
-\hline
-\textbf{parameter} & \textbf{value} \\
-\hline
-\textnormal{Seismic Zone} & """ + (_render_value(input_dict,'seismic_zone')) + r""" [from Project Location] \\[6pt]
-\hline
-\textnormal{Zone Factor, Z} & """ + (_render_value(input_dict, KEY_SL_ZONE_FACTOR)) + r""" \\[6pt]
-\hline
-\textnormal{Importance Factor, I} & """ + (_render_value(input_dict, KEY_SL_IMPORTANCE_FACTOR)) + r""" \\[6pt]
-\hline
-\textnormal{Type of Soil} & """ + (_render_value(input_dict, KEY_SL_SOIL_TYPE)) + r""" \\[6pt]
-\hline
-\textnormal{Sa/g} & """ + (_render_value(input_dict, KEY_SL_SPECTRAL_COEFF)) + r""" \\[6pt]
-\hline
-\textnormal{Horizontal Seismic Coefficient, Ah} & """ + (_render_value(input_dict, KEY_SL_HORIZONTAL_COEFF)) + r""" \\[6pt]
-\hline
-\textnormal{Vertical Seismic Coefficient, Av} & """ + (_render_value(input_dict, KEY_SL_VERTICAL_COEFF)) + r""" \\[6pt]
-\hline
-\textnormal{Horizontal Seismic Force (longitudinal)} & """ + '' + r""" kN \\[6pt]
-\hline
-\textnormal{Horizontal Seismic Force (transverse)} & """ + '' + r""" kN \\[6pt]
-\hline
-\end{longtable}
+""" + earthquake_table + r"""
 
 \vspace{1em}
-\begin{longtable}{|L{5.5cm}|p{10.0cm}|}
-\caption{\textbf{Temperature Load (TL) --- per IRC 6}}
-\hline
-\textbf{parameter} & \textbf{value} \\
-\hline
-\textnormal{Maximum Shade Temperature} & """ + (_render_value(input_dict,'shade_temp_max')) + r""" $^\circ$C \\[6pt]
-\hline
-\textnormal{Minimum Shade Temperature} & """ + (_render_value(input_dict,'shade_temp_min')) + r""" $^\circ$C \\[6pt]
-\hline
-\textnormal{Effective Bridge Temp. Range} & """ + (_render_value(input_dict, KEY_TL_BRIDGE_TEMP_MIN)) + r""" to """ + (_render_value(input_dict, KEY_TL_BRIDGE_TEMP_MAX)) + r""" $^\circ$C \\[6pt]
-\hline
-\textnormal{Temperature Rise / Fall for Design} & +""" + (_render_value(input_dict, KEY_TL_TEMP_RISE)) + r""" $^\circ$C / \textminus{}""" + (_render_value(input_dict, KEY_TL_TEMP_FALL)) + r""" $^\circ$C \\[6pt]
-\hline
-\end{longtable}
-
+""" + temperature_table + r"""
 \vspace{1em}
 \begin{longtable}{|C{4.0cm}|p{11.5cm}|}
 \caption{\textbf{Load Combinations}}
